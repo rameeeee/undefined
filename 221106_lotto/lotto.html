@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test1</title>
+    <style>
+        .wrap {
+          width: 678px;
+          margin: 0 auto;
+          text-align: center;
+        }
+        span {
+          display: inline-block;
+          width: 30px;
+          height: 30px;
+          border: 1px solid rgba(0, 0, 0, 0.05);
+          border-radius: 50%;
+          text-shadow: 0 1px 0 rgb(0 0 0 / 10%);
+          vertical-align: middle;
+          font-size: 20px;
+          line-height: 30px;
+          text-align: center;
+          color: #fff;
+          box-sizing: border-box;
+        }
+
+        span + span {
+          margin-left: 6px;
+        }
+        .win_num_box {
+          font-size: 0;
+        }
+        .winning_number {
+          font-size: 0;
+          display: inline-block;
+        }
+
+        .bonus_number {
+          position: relative;
+          display: inline-block;
+          font-size: 0;
+        }
+
+        .bonus_number::before {
+          content: '+';
+          display: inline-block;
+          font-size: 27px;
+          vertical-align: middle;
+          padding: 0 10px;
+          color: gray;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+      <div class="title_area">
+        <h2 class="title">로또6/45</h2>
+      </div>
+      <div class="content_area">
+        <div class="inner">
+          <div class="win_num_box">
+            <div class="win_ball">
+              <div class="winning_number">
+                <span class="ball"></span>
+                <span class="ball"></span>
+                <span class="ball"></span>
+                <span class="ball"></span>
+                <span class="ball"></span>
+                <span class="ball"></span>
+              </div>
+              <div class="bonus_number">
+                <span class="ball"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+
+    
+
+    <script>
+        //로또 : 6개의 번호를 맞춰야 당첨 - 1~45 사이의 숫자가 랜덤하게 반환 - 같은 숫자는 나오지 않음
+
+        // 1. 숫자 6개를 담는 변수를 선언
+        var lotto = []; // 값을 비워 놓은 상태
+        var winBall = document.querySelectorAll("span");
+        var bonusBall = document.querySelector(".bonus_number span")
+
+        // 2. 반복문 - 숫자를 7번 추가
+        for (var i = 0; i < 7; i++) {
+          // 1에서 45사이의 정수를 랜덤하게 반환
+          // random() : 0~1사이의 실수 반환
+          var num = Math.floor(Math.random() * 44) + 1; // 45가 아닌 44를 사용한 이유는 var가 0부터 시작되기 때문
+
+          // 3. 같은 숫자가 나오면 새로운 값으로 변경
+          for (var j in lotto) { // 중첩for문이기 때문에 위에서 선언한 i가 아닌 다른 변수 사용
+            while (num == lotto[j]) { // 현재 num값이 기존 lotto값과 같다면
+              var num = Math.floor(Math.random() * 44) + 1; // 새로운 랜덤한 숫자를 담기
+            }
+
+            
+          }
+
+          if(i <= 5) {
+            lotto.push(num); // 4. num값을 lotto배열에 추가
+          } else if (i = 6) {
+            bonusBall.textContent = num;
+          }
+        }
+
+        // 5. lotto 숫자를 오름차순으로 정렬
+        lotto.sort(function (left, right) {
+          return left - right;
+        });
+
+        
+        for(var k=0; k<6; k++){
+          winBall[k].textContent = lotto[k];
+
+          // 색상 지정
+          if(winBall[k].textContent < 10) {
+              winBall[k].style.background = "#f2b720";
+          } else if(winBall[k].textContent >= 10 && winBall[k].textContent < 20) {
+            winBall[k].style.background = "#4072ac";
+          } else if(winBall[k].textContent >= 20 && winBall[k].textContent < 30) {
+            winBall[k].style.background = "#de4c0e";
+          } else if(winBall[k].textContent >= 30 && winBall[k].textContent < 40) {
+            winBall[k].style.background = "#9195a4";
+          } else {
+            winBall[k].style.background = "#13be4b";
+          }
+        }
+
+        // 색상 지정
+        if(winBall[k].textContent < 10) {
+          winBall[k].style.background = "#f2b720";
+        } else if(winBall[k].textContent >= 10 && winBall[k].textContent < 20) {
+          winBall[k].style.background = "#4072ac";
+        } else if(winBall[k].textContent >= 20 && winBall[k].textContent < 30) {
+          winBall[k].style.background = "#de4c0e";
+        } else if(winBall[k].textContent >= 30 && winBall[k].textContent < 40) {
+          winBall[k].style.background = "#9195a4";
+        } else {
+          winBall[k].style.background = "#13be4b";
+        }
+        
+        
+
+      </script>
+</body>
+</html>
